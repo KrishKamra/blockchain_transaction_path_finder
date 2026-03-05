@@ -22,7 +22,6 @@ pip install -r requirements.txt
 
 ## 📂 Project Structure
 ```text
-IS-1_Mini_Project/
 ├── main.ipynb                 # Core logic and algorithm implementation
 ├── synthetic_blockchain_data.csv # Transaction dataset
 ├── interactive_blockchain.html # Interactive graph visualization
