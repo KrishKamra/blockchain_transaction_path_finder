@@ -1,0 +1,163 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #0a0a0a;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "rgba(109, 145, 0, 0.9)", "font": {"color": "white"}, "id": "W004", "label": "W004", "shape": "dot", "size": 24.3, "title": "\u003cb\u003eWallet:\u003c/b\u003e W004\u003cbr\u003eRisk: 0.43\u003cbr\u003eOutgoing Tx: 5"}, {"color": "rgba(73, 181, 0, 0.9)", "font": {"color": "white"}, "id": "W019", "label": "W019", "shape": "dot", "size": 22.9, "title": "\u003cb\u003eWallet:\u003c/b\u003e W019\u003cbr\u003eRisk: 0.29\u003cbr\u003eOutgoing Tx: 1"}, {"color": "rgba(68, 187, 0, 0.9)", "font": {"color": "white"}, "id": "W013", "label": "W013", "shape": "dot", "size": 22.666666666666668, "title": "\u003cb\u003eWallet:\u003c/b\u003e W013\u003cbr\u003eRisk: 0.27\u003cbr\u003eOutgoing Tx: 3"}, {"color": "rgba(121, 133, 0, 0.9)", "font": {"color": "white"}, "id": "W011", "label": "W011", "shape": "dot", "size": 24.75, "title": "\u003cb\u003eWallet:\u003c/b\u003e W011\u003cbr\u003eRisk: 0.48\u003cbr\u003eOutgoing Tx: 2"}, {"color": "rgba(137, 117, 0, 0.9)", "font": {"color": "white"}, "id": "W020", "label": "W020", "shape": "dot", "size": 25.4, "title": "\u003cb\u003eWallet:\u003c/b\u003e W020\u003cbr\u003eRisk: 0.54\u003cbr\u003eOutgoing Tx: 1"}, {"color": "rgba(73, 181, 0, 0.9)", "font": {"color": "white"}, "id": "W007", "label": "W007", "shape": "dot", "size": 22.9, "title": "\u003cb\u003eWallet:\u003c/b\u003e W007\u003cbr\u003eRisk: 0.29\u003cbr\u003eOutgoing Tx: 3"}, {"color": "rgba(160, 94, 0, 0.9)", "font": {"color": "white"}, "id": "W002", "label": "W002", "shape": "dot", "size": 26.3, "title": "\u003cb\u003eWallet:\u003c/b\u003e W002\u003cbr\u003eRisk: 0.63\u003cbr\u003eOutgoing Tx: 2"}, {"color": "rgba(17, 237, 0, 0.9)", "font": {"color": "white"}, "id": "W016", "label": "W016", "shape": "dot", "size": 20.7, "title": "\u003cb\u003eWallet:\u003c/b\u003e W016\u003cbr\u003eRisk: 0.07\u003cbr\u003eOutgoing Tx: 1"}, {"color": "rgba(224, 30, 0, 0.9)", "font": {"color": "white"}, "id": "W018", "label": "W018", "shape": "dot", "size": 28.8, "title": "\u003cb\u003eWallet:\u003c/b\u003e W018\u003cbr\u003eRisk: 0.88\u003cbr\u003eOutgoing Tx: 1"}, {"color": "rgba(59, 195, 0, 0.9)", "font": {"color": "white"}, "id": "W010", "label": "W010", "shape": "dot", "size": 22.35, "title": "\u003cb\u003eWallet:\u003c/b\u003e W010\u003cbr\u003eRisk: 0.23\u003cbr\u003eOutgoing Tx: 2"}, {"color": "rgba(0, 255, 0, 0.9)", "font": {"color": "white"}, "id": "W015", "label": "W015", "shape": "dot", "size": 20, "title": "\u003cb\u003eWallet:\u003c/b\u003e W015\u003cbr\u003eRisk: 0.00\u003cbr\u003eOutgoing Tx: 0"}, {"color": "rgba(132, 122, 0, 0.9)", "font": {"color": "white"}, "id": "W001", "label": "W001", "shape": "dot", "size": 25.2, "title": "\u003cb\u003eWallet:\u003c/b\u003e W001\u003cbr\u003eRisk: 0.52\u003cbr\u003eOutgoing Tx: 2"}, {"color": "rgba(149, 105, 0, 0.9)", "font": {"color": "white"}, "id": "W012", "label": "W012", "shape": "dot", "size": 25.85, "title": "\u003cb\u003eWallet:\u003c/b\u003e W012\u003cbr\u003eRisk: 0.58\u003cbr\u003eOutgoing Tx: 4"}, {"color": "rgba(109, 145, 0, 0.9)", "font": {"color": "white"}, "id": "W014", "label": "W014", "shape": "dot", "size": 24.3, "title": "\u003cb\u003eWallet:\u003c/b\u003e W014\u003cbr\u003eRisk: 0.43\u003cbr\u003eOutgoing Tx: 1"}, {"color": "rgba(240, 14, 0, 0.9)", "font": {"color": "white"}, "id": "W005", "label": "W005", "shape": "dot", "size": 29.45, "title": "\u003cb\u003eWallet:\u003c/b\u003e W005\u003cbr\u003eRisk: 0.94\u003cbr\u003eOutgoing Tx: 2"}, {"color": "rgba(56, 198, 0, 0.9)", "font": {"color": "white"}, "id": "W017", "label": "W017", "shape": "dot", "size": 22.2, "title": "\u003cb\u003eWallet:\u003c/b\u003e W017\u003cbr\u003eRisk: 0.22\u003cbr\u003eOutgoing Tx: 1"}, {"color": "rgba(140, 114, 0, 0.9)", "font": {"color": "white"}, "id": "W003", "label": "W003", "shape": "dot", "size": 25.5, "title": "\u003cb\u003eWallet:\u003c/b\u003e W003\u003cbr\u003eRisk: 0.55\u003cbr\u003eOutgoing Tx: 1"}, {"color": "rgba(124, 130, 0, 0.9)", "font": {"color": "white"}, "id": "W009", "label": "W009", "shape": "dot", "size": 24.9, "title": "\u003cb\u003eWallet:\u003c/b\u003e W009\u003cbr\u003eRisk: 0.49\u003cbr\u003eOutgoing Tx: 1"}, {"color": "rgba(123, 131, 0, 0.9)", "font": {"color": "white"}, "id": "W006", "label": "W006", "shape": "dot", "size": 24.85, "title": "\u003cb\u003eWallet:\u003c/b\u003e W006\u003cbr\u003eRisk: 0.48\u003cbr\u003eOutgoing Tx: 4"}, {"color": "rgba(177, 77, 0, 0.9)", "font": {"color": "white"}, "id": "W008", "label": "W008", "shape": "dot", "size": 26.950000000000003, "title": "\u003cb\u003eWallet:\u003c/b\u003e W008\u003cbr\u003eRisk: 0.70\u003cbr\u003eOutgoing Tx: 2"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "color": "gray", "from": "W004", "title": "\u003cb\u003eTxID:\u003c/b\u003e T001\u003cbr\u003eAmount: 937.96\u003cbr\u003eRisk: 0.82", "to": "W019", "value": 937.96}, {"arrows": "to", "color": "gray", "from": "W004", "title": "\u003cb\u003eTxID:\u003c/b\u003e T003\u003cbr\u003eAmount: 261.06\u003cbr\u003eRisk: 0.3", "to": "W020", "value": 261.06}, {"arrows": "to", "color": "gray", "from": "W004", "title": "\u003cb\u003eTxID:\u003c/b\u003e T038\u003cbr\u003eAmount: 853.47\u003cbr\u003eRisk: 0.21", "to": "W006", "value": 853.47}, {"arrows": "to", "color": "gray", "from": "W004", "title": "\u003cb\u003eTxID:\u003c/b\u003e T023\u003cbr\u003eAmount: 600.21\u003cbr\u003eRisk: 0.63", "to": "W015", "value": 600.21}, {"arrows": "to", "color": "gray", "from": "W004", "title": "\u003cb\u003eTxID:\u003c/b\u003e T027\u003cbr\u003eAmount: 790.63\u003cbr\u003eRisk: 0.19", "to": "W013", "value": 790.63}, {"arrows": "to", "color": "gray", "from": "W019", "title": "\u003cb\u003eTxID:\u003c/b\u003e T017\u003cbr\u003eAmount: 344.31\u003cbr\u003eRisk: 0.29", "to": "W002", "value": 344.31}, {"arrows": "to", "color": "gray", "from": "W013", "title": "\u003cb\u003eTxID:\u003c/b\u003e T002\u003cbr\u003eAmount: 208.58\u003cbr\u003eRisk: 0.65", "to": "W011", "value": 208.58}, {"arrows": "to", "color": "gray", "from": "W013", "title": "\u003cb\u003eTxID:\u003c/b\u003e T004\u003cbr\u003eAmount: 935.6\u003cbr\u003eRisk: 0.0", "to": "W007", "value": 935.6}, {"arrows": "to", "color": "gray", "from": "W013", "title": "\u003cb\u003eTxID:\u003c/b\u003e T022\u003cbr\u003eAmount: 438.36\u003cbr\u003eRisk: 0.15", "to": "W010", "value": 438.36}, {"arrows": "to", "color": "gray", "from": "W011", "title": "\u003cb\u003eTxID:\u003c/b\u003e T008\u003cbr\u003eAmount: 219.53\u003cbr\u003eRisk: 0.39", "to": "W001", "value": 219.53}, {"arrows": "to", "color": "gray", "from": "W011", "title": "\u003cb\u003eTxID:\u003c/b\u003e T030\u003cbr\u003eAmount: 629.64\u003cbr\u003eRisk: 0.56", "to": "W012", "value": 629.64}, {"arrows": "to", "color": "gray", "from": "W020", "title": "\u003cb\u003eTxID:\u003c/b\u003e T005\u003cbr\u003eAmount: 875.24\u003cbr\u003eRisk: 0.54", "to": "W002", "value": 875.24}, {"arrows": "to", "color": "gray", "from": "W007", "title": "\u003cb\u003eTxID:\u003c/b\u003e T018\u003cbr\u003eAmount: 603.08\u003cbr\u003eRisk: 0.09", "to": "W018", "value": 603.08}, {"arrows": "to", "color": "gray", "from": "W007", "title": "\u003cb\u003eTxID:\u003c/b\u003e T019\u003cbr\u003eAmount: 323.6\u003cbr\u003eRisk: 0.74", "to": "W002", "value": 323.6}, {"arrows": "to", "color": "gray", "from": "W007", "title": "\u003cb\u003eTxID:\u003c/b\u003e T025\u003cbr\u003eAmount: 947.01\u003cbr\u003eRisk: 0.04", "to": "W011", "value": 947.01}, {"arrows": "to", "color": "gray", "from": "W002", "title": "\u003cb\u003eTxID:\u003c/b\u003e T026\u003cbr\u003eAmount: 373.0\u003cbr\u003eRisk: 0.49", "to": "W017", "value": 373.0}, {"arrows": "to", "color": "gray", "from": "W002", "title": "\u003cb\u003eTxID:\u003c/b\u003e T039\u003cbr\u003eAmount: 798.51\u003cbr\u003eRisk: 0.77", "to": "W004", "value": 798.51}, {"arrows": "to", "color": "gray", "from": "W016", "title": "\u003cb\u003eTxID:\u003c/b\u003e T006\u003cbr\u003eAmount: 726.29\u003cbr\u003eRisk: 0.07", "to": "W018", "value": 726.29}, {"arrows": "to", "color": "gray", "from": "W018", "title": "\u003cb\u003eTxID:\u003c/b\u003e T037\u003cbr\u003eAmount: 521.62\u003cbr\u003eRisk: 0.88", "to": "W005", "value": 521.62}, {"arrows": "to", "color": "gray", "from": "W010", "title": "\u003cb\u003eTxID:\u003c/b\u003e T007\u003cbr\u003eAmount: 633.16\u003cbr\u003eRisk: 0.16", "to": "W015", "value": 633.16}, {"arrows": "to", "color": "gray", "from": "W010", "title": "\u003cb\u003eTxID:\u003c/b\u003e T033\u003cbr\u003eAmount: 202.43\u003cbr\u003eRisk: 0.31", "to": "W016", "value": 202.43}, {"arrows": "to", "color": "gray", "from": "W001", "title": "\u003cb\u003eTxID:\u003c/b\u003e T011\u003cbr\u003eAmount: 99.15\u003cbr\u003eRisk: 0.89", "to": "W015", "value": 99.15}, {"arrows": "to", "color": "gray", "from": "W001", "title": "\u003cb\u003eTxID:\u003c/b\u003e T012\u003cbr\u003eAmount: 804.21\u003cbr\u003eRisk: 0.15", "to": "W014", "value": 804.21}, {"arrows": "to", "color": "gray", "from": "W012", "title": "\u003cb\u003eTxID:\u003c/b\u003e T009\u003cbr\u003eAmount: 825.99\u003cbr\u003eRisk: 0.31", "to": "W019", "value": 825.99}, {"arrows": "to", "color": "gray", "from": "W012", "title": "\u003cb\u003eTxID:\u003c/b\u003e T010\u003cbr\u003eAmount: 602.83\u003cbr\u003eRisk: 0.61", "to": "W001", "value": 602.83}, {"arrows": "to", "color": "gray", "from": "W012", "title": "\u003cb\u003eTxID:\u003c/b\u003e T015\u003cbr\u003eAmount: 926.63\u003cbr\u003eRisk: 0.74", "to": "W015", "value": 926.63}, {"arrows": "to", "color": "gray", "from": "W012", "title": "\u003cb\u003eTxID:\u003c/b\u003e T016\u003cbr\u003eAmount: 860.8\u003cbr\u003eRisk: 0.68", "to": "W003", "value": 860.8}, {"arrows": "to", "color": "gray", "from": "W014", "title": "\u003cb\u003eTxID:\u003c/b\u003e T014\u003cbr\u003eAmount: 893.39\u003cbr\u003eRisk: 0.43", "to": "W017", "value": 893.39}, {"arrows": "to", "color": "gray", "from": "W005", "title": "\u003cb\u003eTxID:\u003c/b\u003e T013\u003cbr\u003eAmount: 454.05\u003cbr\u003eRisk: 0.94", "to": "W019", "value": 454.05}, {"arrows": "to", "color": "gray", "from": "W005", "title": "\u003cb\u003eTxID:\u003c/b\u003e T024\u003cbr\u003eAmount: 556.19\u003cbr\u003eRisk: 0.95", "to": "W016", "value": 556.19}, {"arrows": "to", "color": "gray", "from": "W017", "title": "\u003cb\u003eTxID:\u003c/b\u003e T029\u003cbr\u003eAmount: 57.59\u003cbr\u003eRisk: 0.22", "to": "W019", "value": 57.59}, {"arrows": "to", "color": "gray", "from": "W003", "title": "\u003cb\u003eTxID:\u003c/b\u003e T036\u003cbr\u003eAmount: 773.44\u003cbr\u003eRisk: 0.55", "to": "W005", "value": 773.44}, {"arrows": "to", "color": "gray", "from": "W009", "title": "\u003cb\u003eTxID:\u003c/b\u003e T020\u003cbr\u003eAmount: 965.68\u003cbr\u003eRisk: 0.49", "to": "W014", "value": 965.68}, {"arrows": "to", "color": "gray", "from": "W006", "title": "\u003cb\u003eTxID:\u003c/b\u003e T028\u003cbr\u003eAmount: 774.65\u003cbr\u003eRisk: 0.41", "to": "W010", "value": 774.65}, {"arrows": "to", "color": "gray", "from": "W006", "title": "\u003cb\u003eTxID:\u003c/b\u003e T031\u003cbr\u003eAmount: 487.86\u003cbr\u003eRisk: 0.06", "to": "W003", "value": 487.86}, {"arrows": "to", "color": "gray", "from": "W006", "title": "\u003cb\u003eTxID:\u003c/b\u003e T032\u003cbr\u003eAmount: 866.58\u003cbr\u003eRisk: 0.47", "to": "W005", "value": 866.58}, {"arrows": "to", "color": "gray", "from": "W006", "title": "\u003cb\u003eTxID:\u003c/b\u003e T035\u003cbr\u003eAmount: 805.32\u003cbr\u003eRisk: 1.0", "to": "W011", "value": 805.32}, {"arrows": "to", "color": "gray", "from": "W008", "title": "\u003cb\u003eTxID:\u003c/b\u003e T034\u003cbr\u003eAmount: 696.53\u003cbr\u003eRisk: 0.58", "to": "W006", "value": 696.53}, {"arrows": "to", "color": "gray", "from": "W008", "title": "\u003cb\u003eTxID:\u003c/b\u003e T040\u003cbr\u003eAmount: 408.57\u003cbr\u003eRisk: 0.81", "to": "W016", "value": 408.57}, {"arrows": "to", "color": "cyan", "from": "W004", "to": "W013", "width": 4}, {"arrows": "to", "color": "cyan", "from": "W013", "to": "W007", "width": 4}, {"arrows": "to", "color": "cyan", "from": "W007", "to": "W011", "width": 4}, {"arrows": "to", "color": "cyan", "from": "W011", "to": "W012", "width": 4}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -80000,
+            "springConstant": 0.001,
+            "springLength": 250
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
