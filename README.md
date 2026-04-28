@@ -84,11 +84,65 @@ Based on project evaluation, the system demonstrates high reliability in detecti
 ## 📂 Project Structure
 
 ```text
-IS-1_Mini_Project/
-├── main.ipynb                 # Core logic and algorithm implementation
-├── synthetic_blockchain_data.csv # Transaction dataset
-├── interactive_blockchain.html # Interactive graph visualization
-├── Blockchain_Final_Report.pdf # Detailed performance report
-├── requirements.txt           # Python dependencies
-└── .gitignore                 # Files to exclude from Git
+blockchain_transaction_path_finder/
+├── .gitignore                   # Excludes checkpoints and cache
+├── main.ipynb                   # Primary development and logic notebook
+├── requirements.txt             # Project dependencies
+├── synthetic_blockchain_data.csv # Generated transaction dataset
+├── interactive_blockchain.html  # Interactive graph visualization
+├── Blockchain_Final_Report.pdf  # Comprehensive performance insights
+└── README.md                    # Modern documentation
+```
+
+---
+
+## 🚀 Quick Start
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/KrishKamra/blockchain_transaction_path_finder.git
+cd IS-1_Mini_Project
+```
+
+### 2. Install Dependencies
+Ensure you have Python 3.13+ installed.
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Run the Analysis
+Open your Jupyter environment and execute `main.ipynb` or run via CLI:
+```bash
+python main.py
+```
+
+---
+
+## 🗺️ Roadmap
+
+- [x] Phase 1: Core Graph Representation & Search Algorithms.
+- [x] Phase 2: Dynamic Risk Scoring Implementation.
+- [x] Phase 3: Interactive Visualization Engine.
+- [ ] Phase 4: Integration with real-time Ethereum/Bitcoin RPC providers.
+- [ ] Phase 5: NPU-accelerated sub-graph matching for fraud patterns.
+
+---
+
+## 🛠️ Contributing
+
+Contributions are what make the open-source community an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 👨‍💻 Author
+
+**Krish Kamra**
+ 
+**License:** Distributed under the MIT License. See `LICENSE` for more information.
+
+---
 
