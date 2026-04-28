@@ -101,7 +101,7 @@ blockchain_transaction_path_finder/
 ### 1. Clone the Repository
 ```bash
 git clone https://github.com/KrishKamra/blockchain_transaction_path_finder.git
-cd IS-1_Mini_Project
+cd blockchain_transaction_path_finder
 ```
 
 ### 2. Install Dependencies
